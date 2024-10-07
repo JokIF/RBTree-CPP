@@ -19,6 +19,7 @@ class RBTree
         void delete_node(uint32_t key_del);
         void delete_tree();
         std::string get_value();
+        RBTree* max();
 
     private:
         void _delete_tree();

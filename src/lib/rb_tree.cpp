@@ -156,6 +156,14 @@ RBTree* RBTree::min()
     return min_node;
 }
 
+RBTree* RBTree::max()
+{
+    RBTree* max_node = this;
+    while (max_node->right != nullptr)
+        max_node = max_node->right;
+    return max_node;
+}
+
 
 RBTree::~RBTree()
 {
