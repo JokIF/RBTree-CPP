@@ -7,6 +7,9 @@ set(MAIN src/main)
 set(RBTree src/lib/rb_tree)
 set(RBTreeFacory src/lib/rb_tree_factory)
 
+set(ASCENDING_NUMBERS ${CMAKE_SOURCE_DIR}/numbers_ascending.txt)
+set(DESCENDING_NUMBERS ${CMAKE_SOURCE_DIR}/numbers_descending.txt)
+
 add_executable(test_tree ${MAIN}.cpp)
 
 add_library(rbtree_lib_base src/lib/rb_tree_base.h)
@@ -18,3 +21,17 @@ add_library(rbtree_lib ${RBTreeFacory}.cpp ${RBTree}.cpp ${RBTree}.h)
 target_link_libraries(rbtree_lib PRIVATE rbtree_lib_base)
 
 target_link_libraries(test_tree PRIVATE rbtree_lib)
+
+add_custom_command(
+    OUTPUT 
+    ${ASCENDING_NUMBERS} 
+    COMMAND ${CMAKE_COMMAND} -E touch ${ASCENDING_NUMBERS} && seq 1 50000 > ${ASCENDING_NUMBERS}
+    )
+
+add_custom_command(
+    OUTPUT 
+    ${DESCENDING_NUMBERS} 
+    COMMAND ${CMAKE_COMMAND} -E touch ${DESCENDING_NUMBERS} && seq 50000 -1 1 > ${DESCENDING_NUMBERS}
+    )
+
+add_custom_target(generate_numbers ALL DEPENDS ${ASCENDING_NUMBERS} ${DESCENDING_NUMBERS})
