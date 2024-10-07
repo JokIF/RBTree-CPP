@@ -198,7 +198,7 @@ void RBTree::fix_tree_delete(RBTree* node, RBTree* node_parent)
 {
     RBTree* parent;
     RBTree* temp;
-    if (node == nullptr || node != *node->root && node->color == black)
+    while (node == nullptr || node != *node->root && node->color == black)
     {
         if (node == nullptr) parent = node_parent;
         else parent = node->parent;
@@ -215,7 +215,8 @@ void RBTree::fix_tree_delete(RBTree* node, RBTree* node_parent)
             if ((temp->left == nullptr || temp->left->color == black) && (temp->right == nullptr ||temp->right->color == black))
             {
                 temp->color = red;
-                fix_tree_delete(parent);
+                node = parent;
+                parent = node->parent;
             }
             else
             {
@@ -232,7 +233,7 @@ void RBTree::fix_tree_delete(RBTree* node, RBTree* node_parent)
                 parent->rotate_left();
             }
         }
-        if (node == parent->right)
+        else if (node == parent->right)
         {
             temp = parent->left;
             if (temp->color == red)
@@ -245,7 +246,7 @@ void RBTree::fix_tree_delete(RBTree* node, RBTree* node_parent)
             if ((temp->left == nullptr || temp->left->color == black) && (temp->right == nullptr ||temp->right->color == black))
             {
                 temp->color = red;
-                fix_tree_delete(parent);
+                node = parent;
             }
             else
             {
@@ -260,7 +261,7 @@ void RBTree::fix_tree_delete(RBTree* node, RBTree* node_parent)
                 parent->color = black;
                 if (temp->left != nullptr) temp->left->color = black;
                 parent->rotate_right();
-                fix_tree_delete(temp->parent);
+                node = temp->parent;
             }
         }
     }
