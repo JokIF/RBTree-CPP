@@ -2,9 +2,15 @@
 #include <iostream>
 
 
-void foo(RBTree* tree);
+void test_add_delete();
 
 int main()
+{
+    test_add_delete();
+
+}
+
+void test_add_delete()
 {
     auto tree = FactoryRBTree::CreateFactoryRBTree(14, "ROOTFIRST");
     tree->add(14, "14");
@@ -29,3 +35,4 @@ int main()
 
     tree->delete_tree();
 }
+
