@@ -1,6 +1,8 @@
 #include "./rb_tree.h"
 #include <string>
 #include <stdint.h>
+#include <cmath>
+#include <algorithm>
 
 
 RBTree::RBTree(uint32_t key, std::string value, RBTree* parent) : value(value), key(key), parent(parent) 
@@ -331,4 +333,29 @@ void RBTree::_delete_tree()
 std::string RBTree::get_value()
 {
     return this->value;
+}
+
+bool lemma_truth(uint32_t node_amount, uint32_t level_tree)
+{
+    return (uint32_t)(std::log2(node_amount + 1) * 2) >= level_tree;
+}
+
+uint32_t RBTree::get_level_On()
+{
+    RBTree* tree = *root;
+    uint32_t level_gl = 0;
+    if (tree != nullptr)
+        _get_level_On(tree, &level_gl, 1);
+    return level_gl;
+
+}
+
+void RBTree::_get_level_On(RBTree* tree, uint32_t* level_tree_gl, uint32_t level_tree)
+{
+    if (*level_tree_gl < level_tree)
+        *level_tree_gl = level_tree;
+    if (tree->left != nullptr)
+        _get_level_On(tree->left, level_tree_gl, level_tree + 1);
+    if (tree->right != nullptr)
+        _get_level_On(tree->right, level_tree_gl, level_tree + 1);
 }

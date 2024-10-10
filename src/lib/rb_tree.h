@@ -22,8 +22,10 @@ class RBTree : public virtual BaseRBTree
         void delete_node(uint32_t key_del) override;
         void delete_tree() override;
         std::string get_value() override;
+        uint32_t get_level_On();
 
     private:
+        void _get_level_On(RBTree* tree, uint32_t* level_tree_gl, uint32_t level_tree=0);
         void _delete_tree();
         void rotate_left();
         void rotate_right();
@@ -44,3 +46,5 @@ class FactoryRBTree
     public:
         static RBTree* CreateFactoryRBTree(uint32_t key, std::string value);
 };
+
+bool lemma_truth(uint32_t node_amount, uint32_t level_tree);
